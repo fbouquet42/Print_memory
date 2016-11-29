@@ -6,7 +6,7 @@
 /*   By: fbouquet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/28 11:19:37 by fbouquet          #+#    #+#             */
-/*   Updated: 2016/11/28 17:52:56 by fbouquet         ###   ########.fr       */
+/*   Updated: 2016/11/29 10:45:34 by fbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,23 +17,18 @@ void	ft_put_hexa(int nb)
 	char	*str;
 
 	str = "0123456789abcdef";
-	if (nb != 0)
-	{
-		write(1, &str[nb / 16], 1);
-		write(1, &str[nb % 16], 1);
-	}
-	else
-		write(1, "00", 2);
+	write(1, (str + nb / 16), 1);
+	write(1, (str + nb % 16), 1);
 }
 
-void	print_space(size_t len)
+void	print_space(size_t n)
 {
-	while (len != 17)
+	while (n != 16)
 	{
-		if (!(len % 2))
+		if ((n % 2))
 			write(1, " ", 1);
 		write(1, "  ", 2);
-		++len;
+		++n;
 	}
 }
 
@@ -41,11 +36,11 @@ size_t	print_hexa(const unsigned char *addr, size_t size, size_t i)
 {
 	size_t	n;
 
-	n = 1;
-	while (n + i - 1 != size && n != 17)
+	n = 0;
+	while (n + i != size && n != 16)
 	{
-		ft_put_hexa(*(addr + i + n - 1));
-		if (!(n % 2))
+		ft_put_hexa(*(addr + i + n));
+		if (n % 2)
 			write(1, " ", 1);
 		++n;
 	}
